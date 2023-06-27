@@ -35,7 +35,7 @@ class GendersParser extends CommonParser<GenderCase> {
   String get placeholder => 'sex';
 
   @override
-  String get type => 'sex';
+  String get type => 'String';
 
   @override
   String get key => 'select';
