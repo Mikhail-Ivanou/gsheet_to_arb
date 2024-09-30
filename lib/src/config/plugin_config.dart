@@ -76,6 +76,12 @@ class GoogleSheetConfig {
   @JsonKey(name: 'sheet_id')
   int sheetId;
 
+  @JsonKey(name: 'replace_dots')
+  bool? replaceDots;
+
+  @JsonKey(name: 'camel_case')
+  bool? camelCase;
+
   @JsonKey(name: 'category_prefix')
   String categoryPrefix;
 
@@ -95,6 +101,8 @@ class GoogleSheetConfig {
     required this.authFile,
     required this.documentId,
     required this.sheetId,
+    this.replaceDots,
+    this.camelCase,
     required this.categoryPrefix,
     required this.sheetColumns,
     required this.sheetRows,

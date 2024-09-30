@@ -4,6 +4,7 @@ import 'package:gsheet_to_arb/src/translation_document.dart';
 import 'package:collection/collection.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'package:recase/recase.dart';
 
 class GSheetImporter {
   final GoogleSheetConfig config;
@@ -95,6 +96,9 @@ class GSheetImporter {
       }
 
       var key = languages[config.sheetColumns.key].formattedValue;
+      if (config.replaceDots == true) {
+        key = key?.replaceAll('.', '_');
+      }
 
       //Skip rows with missing key value
       if (key == null) {
@@ -104,6 +108,10 @@ class GSheetImporter {
       if (key.startsWith(config.categoryPrefix)) {
         currentCategory = key.substring(config.categoryPrefix.length);
         continue;
+      }
+
+      if (config.camelCase == true) {
+        key = key.camelCase;
       }
 
       final description =

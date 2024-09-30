@@ -50,6 +50,7 @@ class PluginConfigManager {
         gsheet: GoogleSheetConfig(
           categoryPrefix: '# ',
           sheetId: 0,
+          replaceDots: false,
           documentId: '<ADD_DOCUMENT_ID_HERE>',
           authFile: './' + authFileName,
           sheetColumns: SheetColumns(),
