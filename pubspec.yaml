@@ -12,7 +12,9 @@ environment:
 dependencies:
   args: ">=2.3.1"
   intl: ^0.19.0
-  intl_generator: ^0.4.1
+  intl_generator:
+    git:
+      url: https://github.com/Elr03/intl_generator.git
   path: ">=1.8.1"
   googleapis_auth: ^1.6.0
   googleapis: ^13.2.0
