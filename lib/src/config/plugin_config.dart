@@ -74,7 +74,7 @@ class GoogleSheetConfig {
   String documentId;
 
   @JsonKey(name: 'sheet_id')
-  String sheetId;
+  int sheetId;
 
   @JsonKey(name: 'category_prefix')
   String categoryPrefix;

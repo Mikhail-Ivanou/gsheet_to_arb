@@ -1,7 +1,7 @@
 import 'package:gsheet_to_arb/gsheet_to_arb.dart';
 
 import 'package:gsheet_to_arb/src/translation_document.dart';
-
+import 'package:collection/collection.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
@@ -57,8 +57,10 @@ class GSheetImporter {
   }
 
   Future<TranslationsDocument> _importFrom(Spreadsheet spreadsheet) async {
-    Log.i('_importFrom ${spreadsheet.sheets?.length} ${spreadsheet.sheets}');
-    final sheet = spreadsheet.sheets?[0];
+    final sheet = spreadsheet.sheets?.firstWhereOrNull(
+          (element) => element.properties?.sheetId == config.sheetId,
+        ) ??
+        spreadsheet.sheets?[0];
     final rows = sheet?.data?[0].rowData;
     final header = rows?[0];
     final headerValues = header?.values;
