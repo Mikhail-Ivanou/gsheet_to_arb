@@ -14,7 +14,7 @@ dependencies:
   intl: ^0.20.2
   intl_generator:
     git:
-      url: https://github.com/RootSoft/intl_generator.git
+      url: https://github.com/Mikhail-Ivanou/intl_generator.git
   path: ">=1.8.1"
   googleapis_auth: ^1.6.0
   googleapis: ^13.2.0
