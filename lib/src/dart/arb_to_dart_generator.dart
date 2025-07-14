@@ -15,20 +15,23 @@ import '_icu_parser.dart';
 import '_intl_translation_generator.dart';
 import 'package:intl_generator/src/intl_message.dart';
 import 'package:petitparser/petitparser.dart';
+import 'package:pub_semver/pub_semver.dart' as psv;
 
 class ArbToDartGenerator {
   final intlTranslation = IntlTranslationGenerator();
 
   ArbToDartGenerator();
 
-  void generateDartClasses(ArbBundle bundle, String outputDirectoryPath, String className,
+  void generateDartClasses(
+      ArbBundle bundle, String outputDirectoryPath, String className,
       {bool? addContextPrefix}) {
     Log.i('Genrating Dart classes from ARB...');
     Log.startTimeTracking();
     _buildIntlListFile(bundle.documents.first, outputDirectoryPath, className);
 
     intlTranslation.generateLookupTables(outputDirectoryPath, className);
-    Log.i('Genrating Dart classes from ARB completed, took ${Log.stopTimeTracking()}');
+    Log.i(
+        'Genrating Dart classes from ARB completed, took ${Log.stopTimeTracking()}');
   }
 
   void _buildIntlListFile(
@@ -38,8 +41,8 @@ class ArbToDartGenerator {
   ) {
     var translationClass = Class((ClassBuilder builder) {
       builder.name = ReCase(className).pascalCase;
-      builder.docs
-          .add('\n//ignore_for_file: type_annotate_public_apis, non_constant_identifier_names');
+      builder.docs.add(
+          '\n//ignore_for_file: type_annotate_public_apis, non_constant_identifier_names');
       document.entries.forEach((ArbResource entry) {
         var method = _getResourceMethod(entry);
         builder.methods.add(method);
@@ -53,7 +56,9 @@ class ArbToDartGenerator {
 
     final emitter = DartEmitter(allocator: Allocator.simplePrefixing());
     final emitted = library.accept(emitter);
-    final formatted = DartFormatter().format('$emitted');
+    final formatted = DartFormatter(
+      languageVersion: psv.Version(3, 32, 4),
+    ).format('$emitted');
 
     final file = File('$directory/${className.toLowerCase()}.dart');
     file.createSync();
@@ -63,7 +68,8 @@ class ArbToDartGenerator {
   Method _getResourceMethod(ArbResource resource) {
     return Method((MethodBuilder builder) {
       final key = resource.key;
-      final docs = _fixSpecialCharacters((resource.attributes['description'] ??= '') as String)
+      final docs = _fixSpecialCharacters(
+              (resource.attributes['description'] ??= '') as String)
           .replaceAll('\\n', '\n/// ');
 
       final methodName = key;
@@ -86,7 +92,8 @@ class ArbToDartGenerator {
   void _getResourceFullMethod(ArbResource resource, MethodBuilder builder) {
     final key = resource.key;
     final value = _escapeString(resource.value);
-    final description = _escapeString((resource.attributes['description'] ??= '') as String);
+    final description =
+        _escapeString((resource.attributes['description'] ??= '') as String);
 
     var args = <String>[];
     resource.placeholders?.forEach((ArbResourcePlaceholder placeholder) {
@@ -94,7 +101,9 @@ class ArbToDartGenerator {
         Parameter((ParameterBuilder builder) {
           args.add(placeholder.name);
           final argumentType =
-              placeholder.type == ArbResourcePlaceholder.typeNum ? 'int' : 'String';
+              placeholder.type == ArbResourcePlaceholder.typeNum
+                  ? 'int'
+                  : 'String';
           builder
             ..name = placeholder.name
             ..type = Reference(argumentType);
@@ -110,11 +119,13 @@ class ArbToDartGenerator {
   void _getResourceGetter(ArbResource resource, MethodBuilder builder) {
     final key = resource.key;
     final value = _escapeString(resource.value);
-    final description = _escapeString((resource.attributes['description'] ??= key) as String);
+    final description =
+        _escapeString((resource.attributes['description'] ??= key) as String);
 
     builder
       ..type = MethodType.getter
-      ..body = Code('''Intl.message('$value', name: '$key', desc: '$description')''');
+      ..body = Code(
+          '''Intl.message('$value', name: '$key', desc: '$description')''');
   }
 
   ///
