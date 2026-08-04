@@ -13,7 +13,10 @@ import 'package:gsheet_to_arb/src/utils/log.dart';
 import 'package:recase/recase.dart';
 import '_icu_parser.dart';
 import '_intl_translation_generator.dart';
-import 'package:intl_generator/src/intl_message.dart';
+import 'package:intl_translation/src/messages/submessages/plural.dart';
+import 'package:intl_translation/src/messages/literal_string_message.dart';
+import 'package:intl_translation/src/messages/composite_message.dart';
+import 'package:intl_translation/generate_localized.dart';
 import 'package:petitparser/petitparser.dart';
 import 'package:pub_semver/pub_semver.dart' as psv;
 

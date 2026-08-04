@@ -7,10 +7,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:gsheet_to_arb/src/dart/_icu_parser.dart';
 import 'package:gsheet_to_arb/src/utils/log.dart';
-import 'package:intl_generator/extract_messages.dart';
-import 'package:intl_generator/generate_localized.dart';
+import 'package:intl_translation/generate_localized.dart';
+import 'package:intl_translation/extract_messages.dart';
 import 'package:path/path.dart' as path;
+import 'package:intl_translation/src/messages/literal_string_message.dart';
 
 class IntlTranslationGenerator {
   void generateLookupTables(String outputDirectoryPath, String localizationFileName) {
@@ -46,9 +48,9 @@ class IntlTranslationGenerator {
     mainImportFile.writeAsStringSync(generation.generateMainImportFile());
   }
 
-  final pluralAndGenderParser = IcuParser().message;
+  final pluralAndGenderParser = CustomIcuParser().message;
 
-  final plainParser = IcuParser().nonIcuMessage;
+  final plainParser = CustomIcuParser().nonIcuMessage;
 
   /// Keeps track of all the messages we have processed so far, keyed by message
   /// name.
@@ -108,7 +110,7 @@ class IntlTranslationGenerator {
 class BasicTranslatedMessage extends TranslatedMessage {
   Map<String, List<MainMessage>> messages;
 
-  BasicTranslatedMessage(String name, translated, this.messages) : super(name, translated);
+  BasicTranslatedMessage(String name, translated, this.messages) : super(name, translated, messages.values.first);
 
   @override
   List<MainMessage> get originalMessages => super.originalMessages;

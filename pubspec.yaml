@@ -7,15 +7,13 @@ homepage: https://github.com/gocal/gsheet_to_arb
 publish_to: 'none'
 
 environment:
-  sdk: '>=3.8.0 <4.0.0'
+  sdk: '>=3.12.0 <4.0.0'
 
 dependencies:
   args: ">=2.3.1"
   intl: ^0.20.2
-  intl_generator:
-    git:
-      url: https://github.com/Mikhail-Ivanou/intl_generator.git
-      ref: 909a5f4b1ddc0152b56faa9444466b1c1f86a921
+  intl_translation: ^0.22.0
+  petitparser: 7.0.2
   path: ">=1.8.1"
   googleapis_auth: ^2.0.0
   googleapis: ^15.0.0

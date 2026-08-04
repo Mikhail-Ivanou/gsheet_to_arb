@@ -1,4 +1,8 @@
-import 'package:intl_generator/src/intl_message.dart';
+import 'package:intl_translation/generate_localized.dart';
+import 'package:intl_translation/src/messages/submessages/gender.dart';
+import 'package:intl_translation/src/messages/submessages/plural.dart';
+import 'package:intl_translation/src/messages/submessages/select.dart';
+import 'package:intl_translation/src/messages/variable_substitution_message.dart';
 import 'package:petitparser/petitparser.dart';
 
 class CustomIcuParser {
